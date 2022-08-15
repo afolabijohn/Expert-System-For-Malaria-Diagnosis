@@ -1,0 +1,79 @@
+{% extends 'headerPage.html' %}
+
+{% block content%}
+
+
+<body>
+
+    
+   
+
+<div  style = "border-radius: 20px">
+		<h2>Expert System for Malaria Diagnosis</h2>
+		<h6 class="mb-4">This is an Expert System designed to diagnose malaria Based on Symptoms Intensity </h6>
+
+		<h3>Kindly Note that: </h3>
+		<p>0 Means No sign<p>
+		<p>0.25 Means Mild<p>
+		<p>0.50 Means Moderate<p>
+		<p>0.75 Means Severe<p>
+</div>
+
+<div>
+		<h3>Please Enter Symptom Intensity :</h3>
+		<br>
+		{%  if diagnosis  %}
+		<form method="post" enctype="multipart/form-data" action="updateDatabase">
+		{% else %}
+		<form method="post" enctype="multipart/form-data" action="predictModel">
+		{% endif%} 
+	{% csrf_token %}
+	<div class="form-outline mb-4"><label for="fname">Fever:</label> </div> <input name="fever" class="form-control"  type="number" min="0.00" max="0.75" step="0.25"  ><br><br>
+	<div class="form-outline mb-4"><label for="lname">Headache:</label> </div> <input name="headache"  class="form-control" type="number" min="0.00" max="0.75" step="0.25" ><br><br>
+	<div class="form-outline mb-4"><label for="fname">Nausea:</label> </div> <input  name="nausea" class="form-control"  type="number" min="0.00" max="0.75" step="0.25" ><br><br>
+	<div class="form-outline mb-4"><label for="lname">Vomiting :</label> </div> <input   name="vomiting" class="form-control"  type="number" min="0.00" max="0.75" step="0.25" ><br><br>
+	<div class="form-outline mb-4"><label for="fname">Jaundice:</label></div>  <input  name="jaundice"  class="form-control" type="number" min="0.00" max="0.75" step="0.25"><br><br>
+	<div class="form-outline mb-4"><label for="lname">Enlarged_Liver:</label> </div> <input name="enlarged_Liver"  class="form-control" type="number" min="0.00" max="0.75" step="0.25" ><br><br>
+	<div class="form-outline mb-4"><label for="lname">Joint_Pain:</label> </div> <input   name="joint_Pain" class="form-control"  type="number" min="0.00" max="0.75" step="0.25" ><br><br>
+	<div class="form-outline mb-4"><label for="lname">Body_Weakness:</label> </div> <input  name="body_Weakness"  class="form-control"  class="form-control" type="number" min="0.00" max="0.75" step="0.25" ><br><br>
+	<div class="form-outline mb-4"><label for="lname">Dizziness:</label> </div> <input name="dizziness" type="number" class="form-control"  min="0.00" max="0.75" step="0.25"><br><br>
+	<div class="form-outline mb-4"><label for="lname">Loss_of_Appetite:</label> </div> <input  name="loss_of_Appetite" class="form-control" type="number" min="0.00" max="0.75" step="0.25"><br><br>
+	<div class="form-outline mb-4"><label for="lname">Mp:</label> </div> <input  name="mp"  class="form-control" id="lname" type="number" min="0.00" max="0.75" step="0.25" ><br><br>
+	<br>
+
+	{% if diagnosis %}
+	<div class="text-center">
+		<!-- Button HTML (to Trigger Modal) -->
+		<a href="#myModal" class="trigger-btn" data-toggle="modal">Click to Open Result</a>
+	</div>
+	<div id="myModal" class="modal fade">
+		<div class="modal-dialog modal-confirm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="icon-box">
+						<i class="material-icons">&#xE876;</i>
+					</div>				
+					<h4 class="modal-title w-100">Result!</h4>	
+				</div>
+				<div class="modal-body">
+					<p class="text-center">Your Malaria is <span class="font-weight-bold" style="color:red;">{{diagnosis}}</span>  Please Visit a Medical Doctor as soon as possible</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>  
+	<h3>Do you want to save  in DataBase?
+	</h3>
+	<input type="hidden" id="lname" name="mp" value={{diagnosis}}>
+	<button type="submit" class="btn btn-primary btn-block">Save</button></div>
+	{% else%}
+	<button type="submit" class="btn btn-primary btn-block">Diagnose</button>
+	{% endif %}
+
+</div>
+</form>
+<br>
+
+{% endblock %}
